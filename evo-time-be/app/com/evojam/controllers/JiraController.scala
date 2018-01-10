@@ -1,42 +1,37 @@
 package com.evojam.controllers
 
+import java.time.LocalDate
 import javax.inject._
 
-import com.evojam.configuration.credentials.Credentials
 import com.evojam.servises.jira.JiraService
 import play.api.libs.json.Json
-import play.api.libs.ws.WSClient
 import play.api.mvc._
 
+import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-/**
-  * This controller creates an `Action` to handle HTTP requests to the
-  * application's home page.
-  */
 @Singleton
-class JiraController @Inject()(
-  ws: WSClient,
+final class JiraController @Inject()(
   cc: ControllerComponents,
-  creds: Credentials,
   jira: JiraService
 ) extends AbstractController(cc) {
 
-  /**
-    * Create an Action to render an HTML page.
-    *
-    * The configuration in the `routes` file means that this method
-    * will be called when the application receives a `GET` request with
-    * a path of `/`.
-    */
-  def index() = Action { implicit request: Request[AnyContent] =>
-    Ok
+  def getWorklogs(from: LocalDate, to: Option[LocalDate]) = Action.async { _ =>
+    jira.getWorklogs(from, to.getOrElse(LocalDate.now())).map {
+      case xs if xs.isEmpty => NoContent
+      case worklogs => Ok(Json.toJson(worklogs))
+    }
   }
 
   def helthcheck() = Action.async { request =>
-    jira.getProjectById(12300).map {
-      case Some(p) => Ok(Json.toJson(p))
-      case None => NotFound
-    }
+//    jira.getWorklogs(LocalDate.of(2017, 12, 1), LocalDate.of(2018, 1, 1)).map {
+//      case s if s.isEmpty => NoContent
+//      case worklogs => Ok(Json.toJson(worklogs))
+//    }
+//    jira.getProjectById(12300).map {
+//      case Some(p) => Ok(Json.toJson(p))
+//      case None => NotFound
+//    }
+    Future.successful(Ok)
   }
 }
