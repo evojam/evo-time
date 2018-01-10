@@ -7,7 +7,7 @@ import './Dashboard.css'
 
 export const Dashboard = () => (
   <div className="dashboard">
-    <Navigation className="dashboard__navigation" period={[new Date(), new Date()]}/>
+    <Navigation className="dashboard__navigation" />
     <Table />
   </div>
 )
