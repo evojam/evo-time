@@ -1,0 +1,22 @@
+$summary-width: 250px
+$dashboard-table-height: 200px
+
+.dashboard-table
+  position: relative
+
+  .summary-table
+    background: #fff
+    width: $summary-width
+    height: calc(#{$dashboard-table-height} - 20px)
+
+    position: absolute
+    left: 0
+    top: 0
+
+  .days-table
+    background: #fff
+    width: 100%
+    height: $dashboard-table-height
+    padding-left: $summary-width
+
+    overflow-x: scroll
