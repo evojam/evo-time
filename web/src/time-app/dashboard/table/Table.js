@@ -8,6 +8,8 @@ import './Table.css'
 export const Table = () => (
   <div className="dashboard-table">
     <SummaryTable className="summary-table" />
-    <DaysTable className="days-table" />
+    <div className="days-table-container">
+      <DaysTable />
+    </div>
   </div>
 )
