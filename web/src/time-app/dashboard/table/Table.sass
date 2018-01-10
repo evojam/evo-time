@@ -5,7 +5,7 @@ $dashboard-table-height: 200px
   position: relative
   overflow: hidden
 
-  .summary-table
+  .summary-table-container
     background: #fff
     width: $summary-width
     height: calc(#{$dashboard-table-height} - 20px)
@@ -22,4 +22,4 @@ $dashboard-table-height: 200px
     overflow-x: scroll
 
     table
-      margin-left: $summary-width
+      margin-left: calc(#{$summary-width} - 1px) // -1px for hidding left border
