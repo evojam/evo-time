@@ -1,5 +1,11 @@
 import React from 'react'
 
-export const Navigation = () => (
-  <nav>ARROWS AND (in the future) DATEPICKER COMES HERE</nav>
+import './Navigation.css'
+import { ArrowButton } from './ArrowButton'
+
+export const Navigation = ({ onLeftArrowClick, onRightArrowClick, className }) => (
+  <nav className={`${className} navigation`}>
+    <ArrowButton direction="left" onClick={onLeftArrowClick}/>
+    <ArrowButton direction="right" onClick={onRightArrowClick}/>
+  </nav>
 )

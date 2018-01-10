@@ -1,0 +1,22 @@
+.arrow-button
+  height: 30px
+  width: 35px
+  position: relative
+
+  &, & ~.arrow-button
+    margin: 0
+
+  .aui-icon:before
+    margin: 0
+    top: 0
+    font:
+      size: 24px
+      weight: bolder
+
+  &--left
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
+
+  &--right
+    border-top-left-radius: 0
+    border-bottom-left-radius: 0
