@@ -1,14 +1,12 @@
 import React from 'react'
-import { Navigation } from './Navigation'
-import { Table } from './Table/Table'
-// import { Provider } from 'react-redux'
+import { Provider } from 'react-redux'
 
-// import { store } from 'time-lib/store'
-// import { Router } from './Router'
+import { store } from 'time-lib/store'
+
+import { MainComponent } from './MainComponent'
 
 export const App = () => (
-  <div>
-    <Navigation/>
-    <Table/>
-  </div>
+  <Provider store={store}>
+    <MainComponent />
+  </Provider>
 )
