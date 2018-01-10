@@ -4,7 +4,7 @@ import './Navigation.css'
 import { ArrowButton } from './ArrowButton'
 import { connect } from 'react-redux'
 import { format, isSameMonth } from 'date-fns'
-import { getWorklogForNextPeriod, getWorklogForPreviousPeriod } from 'time-lib/worklog/actions'
+import { getWorklogForNextPeriod, getWorklogForPreviousPeriod } from 'time-lib/worklog'
 
 
 const mapDispatchToProps = dispatch => ({
