@@ -21,9 +21,8 @@ export const Table = () => {
     <div className="dashboard-table">
       <SummaryTable className="summary-table" usersSummary={usersSummary}/>
       <div className="days-table-container">
-        <DaysTable />
+        <DaysTable month={new Date(2018, 0)} />
       </div>
     </div>
     )
 }
-
