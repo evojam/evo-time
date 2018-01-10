@@ -2,9 +2,11 @@ import React from 'react'
 
 import { Table, Navigation } from '../components'
 
+import './Dashboard.css'
+
 export const Dashboard = () => (
-  <div>
-    <Navigation />
+  <div className="dashboard">
+    <Navigation className="dashboard__navigation"/>
     <Table />
   </div>
 )
