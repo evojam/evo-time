@@ -5,11 +5,25 @@ import { DaysTable } from './DaysTable'
 
 import './Table.css'
 
-export const Table = () => (
-  <div className="dashboard-table">
-    <SummaryTable className="summary-table" />
-    <div className="days-table-container">
-      <DaysTable />
+export const Table = () => {
+  const usersSummary = [
+    {
+      userName: 'Anna D',
+      sumOfHours: 124,
+    },
+    {
+      userName: 'Paweł D',
+      sumOfHours: 74,
+    },
+  ]
+
+  return (
+    <div className="dashboard-table">
+      <SummaryTable className="summary-table" usersSummary={usersSummary}/>
+      <div className="days-table-container">
+        <DaysTable />
+      </div>
     </div>
-  </div>
-)
+    )
+}
+
