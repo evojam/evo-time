@@ -4,7 +4,7 @@ import { SummaryTable } from './SummaryTable'
 import { DaysTable } from './DaysTable'
 
 import './Table.css'
-import connect from 'react-redux/es/connect/connect'
+import { connect } from 'react-redux'
 
 export const Table = ({ month }) => (
   <div className="dashboard-table">
