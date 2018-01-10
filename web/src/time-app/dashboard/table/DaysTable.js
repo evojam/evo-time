@@ -10,7 +10,7 @@ const DAY_OF_MONTH = 'DD'
 const DAY_NAME = 'dd'
 
 const TableHeadCell = ({ day }) => (
-  <th key={day} className="head-cell">
+  <th key={day} className="header__cell">
     <span className="bold">{format(day, DAY_OF_MONTH)}</span>
     <span>{format(day, DAY_NAME)}</span>
   </th>
