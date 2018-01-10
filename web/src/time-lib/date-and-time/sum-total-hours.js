@@ -1,4 +1,3 @@
-import { sumWorklogList } from './sum-worklog-list'
 import { secondsToHours } from './seconds-to-hours'
 
 export const sumTotalHours = entry =>
