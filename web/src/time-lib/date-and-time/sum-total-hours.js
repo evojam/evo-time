@@ -1,9 +1,14 @@
-import { secondsToHours } from './seconds-to-hours'
+import { sumWorklogInSeconds } from './sum-worklog'
 
-export const sumTotalHours = entry =>
-  secondsToHours(
-    entry.worklog.reduce(
-      (acc, worklogList) =>
-        acc + worklogList.reduce((acc, log) => acc + log.timeSpentInSeconds, 0),
-      0)
-  )
+const remainingMinutesInSeconds = seconds => {
+  const hours = Math.floor(seconds / 60 / 60)
+  return seconds - (hours * 60 * 60)
+}
+
+export const sumTotalHours = entry => {
+  const seconds = entry.worklog.reduce((acc, worklogList) => acc + sumWorklogInSeconds(worklogList), 0)
+  const hours = Math.floor(seconds / 60 / 60)
+  const minutes = Math.floor(remainingMinutesInSeconds(seconds) / 60)
+
+  return `${hours}h ${minutes}min`
+}

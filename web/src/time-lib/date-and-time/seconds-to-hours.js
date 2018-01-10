@@ -1,1 +1,1 @@
-export const secondsToHours = seconds => (seconds / 60 / 60).toString().substr(0, 4)
+export const secondsToHours = seconds => Math.round(seconds / 60 / 60 * 100) / 100

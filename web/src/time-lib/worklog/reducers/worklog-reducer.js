@@ -5,18 +5,30 @@ const initialState = Map([
     username: 'mwadon',
     displayName: 'Marcin Wadoń',
     worklog: Map([
-      [new Date(new Date(2018, 0, 7)), List([
+      [new Date(new Date(2018, 0, 3)), List([
         {
           timeSpentInSeconds: 7200,
           issueKey: 'ABC-123',
           projectId: 12345,
-          date: new Date(2018, 0, 7, 8, 0, 0),
+          date: new Date(2018, 0, 3, 10, 0, 0),
         },
         {
           timeSpentInSeconds: 7200,
           issueKey: 'ABC-123',
           projectId: 12345,
-          date: new Date(2018, 0, 7, 15, 0, 0),
+          date: new Date(2018, 0, 3, 15, 0, 0),
+        },
+        {
+          timeSpentInSeconds: 7200,
+          issueKey: 'ABC-123',
+          projectId: 12345,
+          date: new Date(2018, 0, 3, 15, 0, 0),
+        },
+        {
+          timeSpentInSeconds: 14400,
+          issueKey: 'ABC-123',
+          projectId: 12345,
+          date: new Date(2018, 0, 3, 15, 0, 0),
         },
       ])],
       [new Date(new Date(2018, 0, 8)), List([
@@ -31,6 +43,22 @@ const initialState = Map([
           issueKey: 'ABC-123',
           projectId: 12345,
           date: new Date(2018, 0, 8, 15, 0, 0),
+        },
+      ])],
+      [new Date(new Date(2018, 0, 10)), List([
+        {
+          timeSpentInSeconds: 7200,
+          issueKey: 'ABC-123',
+          projectId: 12345,
+          date: new Date(2018, 0, 10, 10, 0, 0),
+        },
+      ])],
+      [new Date(new Date(2018, 0, 11)), List([
+        {
+          timeSpentInSeconds: 7200,
+          issueKey: 'ABC-123',
+          projectId: 12345,
+          date: new Date(2018, 0, 3, 10, 0, 0),
         },
       ])],
     ])
