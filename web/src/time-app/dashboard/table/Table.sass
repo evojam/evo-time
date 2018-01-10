@@ -3,6 +3,7 @@ $dashboard-table-height: 200px
 
 .dashboard-table
   position: relative
+  overflow: hidden
 
   .summary-table
     background: #fff
@@ -13,10 +14,12 @@ $dashboard-table-height: 200px
     left: 0
     top: 0
 
-  .days-table
+  .days-table-container
     background: #fff
     width: 100%
     height: $dashboard-table-height
-    padding-left: $summary-width
 
     overflow-x: scroll
+
+    table
+      margin-left: $summary-width
