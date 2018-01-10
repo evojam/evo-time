@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Table, Navigation } from '../components'
+import { Navigation } from '../components'
+import { Table } from './table'
 
 export const Dashboard = () => (
   <div>
