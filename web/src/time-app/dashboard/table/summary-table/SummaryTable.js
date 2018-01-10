@@ -25,7 +25,7 @@ const TableBody = ({ worklog }) => (
   </tbody>
 )
 
-const SummaryTableComponent = ({ worklog }) => (
+export const SummaryTable = ({ worklog }) => (
     <table className="aui summary-table">
       <TableHead />
       <TableBody worklog={worklog} />
@@ -36,4 +36,4 @@ const mapStateToProps = state => ({
   worklog: state.worklog,
 })
 
-export const SummaryTable = connect(mapStateToProps)(SummaryTableComponent)
+export default connect(mapStateToProps)(SummaryTable)

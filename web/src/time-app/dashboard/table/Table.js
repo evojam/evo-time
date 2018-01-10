@@ -1,10 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-import { SummaryTable } from './SummaryTable'
-import { DaysTable } from './DaysTable'
+import SummaryTable from './summary-table/SummaryTable'
+import DaysTable from './days-table/DaysTable'
 
 import './Table.css'
-import { connect } from 'react-redux'
 
 export const Table = ({ month }) => (
   <div className="dashboard-table">
@@ -21,4 +21,4 @@ const mapStateToProps = state => ({
   month: state.selectedPeriod[0] // TODO: Temporary, it works only for fullmonths
 })
 
-export default connect(mapStateToProps, null)(Table)
+export default connect(mapStateToProps)(Table)

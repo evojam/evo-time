@@ -1,5 +1,9 @@
 $table-border-color: #ddd
 
+$suspicious-background-color: #ea9999
+$holiday-background-color: #f4f5f5
+$holiday-text-color: #999
+
 .days-table
   border: 1px solid $table-border-color
   border-collapse: collapse
@@ -18,6 +22,15 @@ $table-border-color: #ddd
       &.bold
         font-weight: bold
 
+    &--holiday
+      color: $holiday-text-color
+
   td
     border: 1px solid $table-border-color
     text-align: center !important
+
+  .body__cell,
+    &--suspicious
+      background-color: $suspicious-background-color
+    &--holiday
+      background-color: $holiday-background-color
