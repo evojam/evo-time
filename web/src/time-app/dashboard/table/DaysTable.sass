@@ -4,9 +4,10 @@ $table-border-color: #ddd
   border: 1px solid $table-border-color
   border-collapse: collapse
 
-  .head-cell
+  .header__cell
     text-align: center
     border: 1px solid $table-border-color
+    padding: 2px 2px
 
     span
       width: 50px
@@ -16,3 +17,7 @@ $table-border-color: #ddd
 
       &.bold
         font-weight: bold
+
+  td
+    border: 1px solid $table-border-color
+    text-align: center !important
