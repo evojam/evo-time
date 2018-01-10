@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux'
 
 import { routerReducer } from '../router'
-import { selectedPeriodReducer } from '../worklog/selected-period-reducer'
-import { worklogReducer } from '../worklog'
+import { selectedPeriodReducer, worklogReducer } from '../worklog/reducers'
 
 export const rootReducer = combineReducers({
   router: routerReducer,

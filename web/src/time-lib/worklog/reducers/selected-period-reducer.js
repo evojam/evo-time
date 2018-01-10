@@ -1,5 +1,5 @@
 import { addMonths, subMonths, endOfMonth, startOfMonth } from 'date-fns'
-import { GET_WORKLOG_FOR_NEXT_PERIOD_ACTION, GET_WORKLOG_FOR_PREVIOUS_PERIOD_ACTION } from './actions'
+import { GET_WORKLOG_FOR_NEXT_PERIOD_ACTION, GET_WORKLOG_FOR_PREVIOUS_PERIOD_ACTION } from '../actions'
 
 const initialState = [startOfMonth(new Date()), endOfMonth(new Date())]
 
