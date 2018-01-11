@@ -9,6 +9,7 @@ import {
 import { sumWorklogListToHours, isStartOfWeek, isSuspiciousWorklog } from 'time-lib/date-and-time'
 
 import './DaysTable.css'
+import { openTooltip } from 'time-lib/worklog'
 
 const DAY_OF_MONTH = 'DD'
 const DAY_NAME = 'dd'
@@ -59,7 +60,7 @@ const TableHead = ({ daysInMonth }) => (
   </thead>
 )
 
-const TableBodyCell = ({ date, hours: maybeHours }) => {
+const TableBodyCell = ({ date, hours: maybeHours, username, openTooltip }) => {
   const hours = maybeHours.orJust(0)
 
   const className = classNameWithModifiers(
@@ -69,42 +70,46 @@ const TableBodyCell = ({ date, hours: maybeHours }) => {
   )('body__cell', date, hours)
 
   return (
-    <td className={className}>
+    <td className={className} onClick={openTooltip(username)}>
       {maybeHours.orJust('')}
     </td>
   )
 }
 
-const TableBodyRow = ({ daysInMonth, worklog }) => (
+const TableBodyRow = ({ daysInMonth, worklog, username, openTooltip }) => (
   <tr>
     {daysInMonth.map(date =>
       <TableBodyCell
         key={date}
         date={date}
         hours={worklog.has(date) ? Some(sumWorklogListToHours(worklog.get(date))) : None()}
+        username={username}
+        openTooltip={openTooltip}
       />)}
   </tr>
 )
 
-const TableBody = ({ daysInMonth, worklog }) => (
+const TableBody = ({ daysInMonth, worklog, openTooltip }) => (
   <tbody>
     {worklog
       .map((entry, key) =>
         <TableBodyRow
           key={key}
           daysInMonth={daysInMonth}
-          worklog={entry.worklog} />)
+          username={entry.username}
+          worklog={entry.worklog}
+          openTooltip={openTooltip} />)
       .toList()}
   </tbody>
 )
 
-export const DaysTable = ({ month, worklog }) => {
+export const DaysTable = ({ month, worklog, openTooltip }) => {
   const daysInMonth = eachDay(startOfMonth(month), endOfMonth(month))
 
   return (
     <table className="aui days-table">
       <TableHead daysInMonth={daysInMonth} />
-      <TableBody daysInMonth={daysInMonth} worklog={worklog} />
+      <TableBody daysInMonth={daysInMonth} worklog={worklog} openTooltip={openTooltip}/>
     </table>
   )
 }
@@ -113,4 +118,9 @@ const mapStateToProps = state => ({
   worklog: state.worklog,
 })
 
-export default  connect(mapStateToProps)(DaysTable)
+const mapDispatchToProps = dispatch => ({
+  openTooltip: username => () => dispatch(openTooltip(username)),
+})
+
+
+export default  connect(mapStateToProps, mapDispatchToProps)(DaysTable)
