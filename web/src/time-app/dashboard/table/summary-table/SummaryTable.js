@@ -14,9 +14,9 @@ const TableHead = () => (
   </thead>
 )
 
-const TableBody = ({ worklog }) => (
+const TableBody = ({ worklogs }) => (
   <tbody>
-    {worklog.map((entry, key) =>
+    {worklogs.map((entry, key) =>
       <tr key={key}>
         <td className="body__cell">{entry.displayName}</td>
         <td className="body__cell body__cell--right">{sumTotalHours(entry)}</td>
@@ -25,15 +25,15 @@ const TableBody = ({ worklog }) => (
   </tbody>
 )
 
-export const SummaryTable = ({ worklog }) => (
+export const SummaryTable = ({ worklogs }) => (
     <table className="aui summary-table">
       <TableHead />
-      <TableBody worklog={worklog} />
+      <TableBody worklogs={worklogs} />
     </table>
   )
 
 const mapStateToProps = state => ({
-  worklog: state.worklog,
+  worklogs: state.worklogs,
 })
 
 export default connect(mapStateToProps)(SummaryTable)

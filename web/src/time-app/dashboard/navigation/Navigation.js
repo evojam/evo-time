@@ -4,12 +4,11 @@ import './Navigation.css'
 import { ArrowButton } from './ArrowButton'
 import { connect } from 'react-redux'
 import { format, isSameMonth } from 'date-fns'
-import { getWorklogForNextPeriod, getWorklogForPreviousPeriod } from 'time-lib/worklog'
-
+import { previousPeriod, nextPeriod } from 'time-lib/worklogs'
 
 const mapDispatchToProps = dispatch => ({
-  onLeftArrowClick: () => dispatch(getWorklogForPreviousPeriod()),
-  onRightArrowClick: () => dispatch(getWorklogForNextPeriod()),
+  onLeftArrowClick: () => dispatch(previousPeriod()),
+  onRightArrowClick: () => dispatch(nextPeriod()),
 })
 
 const mapStateToProps = state => ({

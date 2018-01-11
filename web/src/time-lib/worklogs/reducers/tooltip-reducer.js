@@ -1,4 +1,4 @@
-import { OPEN_TOOLTIP, CLOSE_TOOLTIP } from '../actions'
+import { WorklogActionType } from '../actions'
 
 const initialState = {
   visible: false,
@@ -6,9 +6,9 @@ const initialState = {
 }
 export const tooltipReducer = (state = initialState, action) => {
   switch (action.type) {
-    case OPEN_TOOLTIP:
+    case WorklogActionType.OpenTooltip:
       return { visible: true, username: action.username }
-    case CLOSE_TOOLTIP:
+    case WorklogActionType.CloseTooltip:
       return initialState
     default:
       return state
