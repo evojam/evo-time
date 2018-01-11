@@ -6,12 +6,33 @@ import com.evojam.configuration.credentials.Credentials
 import com.evojam.models.{Project, Worklog}
 import com.evojam.models.dto.WorklogDto
 import com.google.inject.Inject
+import play.api.cache.AsyncCacheApi
 import play.api.libs.ws.{WSAuthScheme, WSClient, WSResponse}
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class JiraServiceImpl @Inject()(ws: WSClient, creds: Credentials) extends JiraService {
+class JiraServiceImpl @Inject()(
+  ws: WSClient,
+  cache: AsyncCacheApi,
+  creds: Credentials
+) extends JiraService {
+
+  private val key = "credentials"
+
+  override def setJiraCreds(credentials: Credentials): Future[Unit] =
+    cache.get[Map[String, Credentials]](key).flatMap {
+      case Some(creds) =>
+        cache.set(key, creds + (credentials.url -> credentials))
+      case None => cache.set(key, Map(credentials.url -> credentials))
+    }.map(_ => ())
+
+
+  override def getJiraCreds(): Future[Seq[String]] = getCreds().map(_.map(_.url))
+
+  private def getCreds(): Future[Seq[Credentials]] = {
+    cache.get[Map[String, Credentials]](key).map(_.map(_.values.toSeq).getOrElse(Nil))
+  }
 
   private def restCall(path: String): Future[WSResponse] =
     ws.url(creds.url + path)
