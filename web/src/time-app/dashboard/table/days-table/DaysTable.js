@@ -9,6 +9,7 @@ import {
 import { sumWorklogListToHours, isStartOfWeek, isSuspiciousWorklog } from 'time-lib/date-and-time'
 
 import './DaysTable.css'
+import { openTooltip } from 'time-lib/worklog'
 
 const DAY_OF_MONTH = 'DD'
 const DAY_NAME = 'dd'
@@ -59,7 +60,7 @@ const TableHead = ({ daysInMonth }) => (
   </thead>
 )
 
-const TableBodyCell = ({ date, hours: maybeHours }) => {
+const TableBodyCell = ({ date, hours: maybeHours, username, openTooltip }) => {
   const hours = maybeHours.orJust(0)
 
   const className = classNameWithModifiers(
@@ -69,19 +70,26 @@ const TableBodyCell = ({ date, hours: maybeHours }) => {
   )('body__cell', date, hours)
 
   return (
-    <td className={className}>
+    <td className={className} onClick={openTooltip(username)}>
       {maybeHours.orJust('')}
     </td>
   )
 }
 
-const TableBodyRow = ({ daysInMonth, worklog }) => (
+const mapDispatchToProps = dispatch => ({
+  openTooltip: username => () => dispatch(openTooltip(username)),
+})
+
+const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)
+
+const TableBodyRow = ({ daysInMonth, worklog, username }) => (
   <tr>
     {daysInMonth.map(date =>
-      <TableBodyCell
+      <TableBodyCellContainer
         key={date}
         date={date}
         hours={worklog.has(date) ? Some(sumWorklogListToHours(worklog.get(date))) : None()}
+        username={username}
       />)}
   </tr>
 )
@@ -93,6 +101,7 @@ const TableBody = ({ daysInMonth, worklog }) => (
         <TableBodyRow
           key={key}
           daysInMonth={daysInMonth}
+          username={entry.username}
           worklog={entry.worklog} />)
       .toList()}
   </tbody>
