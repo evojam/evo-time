@@ -1,7 +1,13 @@
+$space-between: 10px
+
 .navigation
+  align-items: center
   display: flex
   flex-direction: row
   padding: 15px
 
   form.aui
-    margin: 0 0 0 10px
+    margin: 0 0 0 $space-between
+
+  &__spinner
+    margin-left: $space-between

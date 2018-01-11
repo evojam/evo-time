@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   selectedPeriod: state.selectedPeriod,
+  isLoading: state.isLoading,
 })
 
 const formatPeriod = ([from, to]) => {
@@ -23,13 +24,14 @@ const formatPeriod = ([from, to]) => {
   }
 }
 
-export const Navigation = ({ className, onLeftArrowClick, onRightArrowClick, selectedPeriod }) => (
+export const Navigation = ({ className, onLeftArrowClick, onRightArrowClick, selectedPeriod, isLoading }) => (
   <nav className={`${className} navigation`}>
     <ArrowButton direction="left" onClick={onLeftArrowClick}/>
     <ArrowButton direction="right" onClick={onRightArrowClick}/>
     <form className="aui navigation__form">
       <input className="text" type="text" readOnly={true} value={formatPeriod(selectedPeriod)}/>
     </form>
+    {isLoading && <span className="aui-icon aui-icon-wait navigation__spinner">Wait</span>}
   </nav>
 )
 
