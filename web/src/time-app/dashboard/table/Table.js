@@ -15,7 +15,7 @@ export const Table = ({ month, tooltip }) => (
       <div className="days-table-container">
         <DaysTable month={month} />
       </div>
-      {tooltip.visible === true ? <UserInfo /> : null}
+      {tooltip.visible && <UserInfo /> }
     </div>
   )
 

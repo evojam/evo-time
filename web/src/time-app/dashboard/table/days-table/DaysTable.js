@@ -76,20 +76,19 @@ const TableBodyCell = ({ date, hours: maybeHours, username, openTooltip }) => {
   )
 }
 
-const TableBodyRow = ({ daysInMonth, worklog, username, openTooltip }) => (
+const TableBodyRow = ({ daysInMonth, worklog, username }) => (
   <tr>
     {daysInMonth.map(date =>
-      <TableBodyCell
+      <TableBodyCellContainer
         key={date}
         date={date}
         hours={worklog.has(date) ? Some(sumWorklogListToHours(worklog.get(date))) : None()}
         username={username}
-        openTooltip={openTooltip}
       />)}
   </tr>
 )
 
-const TableBody = ({ daysInMonth, worklog, openTooltip }) => (
+const TableBody = ({ daysInMonth, worklog }) => (
   <tbody>
     {worklog
       .map((entry, key) =>
@@ -97,19 +96,18 @@ const TableBody = ({ daysInMonth, worklog, openTooltip }) => (
           key={key}
           daysInMonth={daysInMonth}
           username={entry.username}
-          worklog={entry.worklog}
-          openTooltip={openTooltip} />)
+          worklog={entry.worklog} />)
       .toList()}
   </tbody>
 )
 
-export const DaysTable = ({ month, worklog, openTooltip }) => {
+export const DaysTable = ({ month, worklog }) => {
   const daysInMonth = eachDay(startOfMonth(month), endOfMonth(month))
 
   return (
     <table className="aui days-table">
       <TableHead daysInMonth={daysInMonth} />
-      <TableBody daysInMonth={daysInMonth} worklog={worklog} openTooltip={openTooltip}/>
+      <TableBody daysInMonth={daysInMonth} worklog={worklog} />
     </table>
   )
 }
@@ -122,5 +120,6 @@ const mapDispatchToProps = dispatch => ({
   openTooltip: username => () => dispatch(openTooltip(username)),
 })
 
+const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)
 
-export default  connect(mapStateToProps, mapDispatchToProps)(DaysTable)
+export default  connect(mapStateToProps)(DaysTable)
