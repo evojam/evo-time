@@ -34,7 +34,6 @@ class UserInfo extends React.Component {
     if (event.keyCode === ENTER_KEYCODE) {
       closeTooltip()
     }
-    return
   }
 
   render() {
