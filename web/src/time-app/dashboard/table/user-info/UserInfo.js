@@ -19,7 +19,7 @@ const TableHead = () => (
 const UserInfo = ({ tooltip, closeTooltip }) => (
    <div className="user-info">
      <table className="aui user-info___table">
-       <TableHead ></TableHead>
+       <TableHead />
      </table>
      <button className="aui-button user-info__btn" onClick={closeTooltip}>close</button>
    </div>

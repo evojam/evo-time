@@ -76,6 +76,12 @@ const TableBodyCell = ({ date, hours: maybeHours, username, openTooltip }) => {
   )
 }
 
+const mapDispatchToProps = dispatch => ({
+  openTooltip: username => () => dispatch(openTooltip(username)),
+})
+
+const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)
+
 const TableBodyRow = ({ daysInMonth, worklog, username }) => (
   <tr>
     {daysInMonth.map(date =>
@@ -115,11 +121,5 @@ export const DaysTable = ({ month, worklog }) => {
 const mapStateToProps = state => ({
   worklog: state.worklog,
 })
-
-const mapDispatchToProps = dispatch => ({
-  openTooltip: username => () => dispatch(openTooltip(username)),
-})
-
-const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)
 
 export default  connect(mapStateToProps)(DaysTable)

@@ -7,7 +7,7 @@ import UserInfo from './user-info/UserInfo'
 
 import './Table.css'
 
-export const Table = ({ month, tooltip }) => (
+export const Table = ({ month, tooltipVisible }) => (
     <div className="dashboard-table">
       <div className="summary-table-container">
         <SummaryTable />
@@ -15,13 +15,13 @@ export const Table = ({ month, tooltip }) => (
       <div className="days-table-container">
         <DaysTable month={month} />
       </div>
-      {tooltip.visible && <UserInfo /> }
+      {tooltipVisible && <UserInfo />}
     </div>
   )
 
 const mapStateToProps = state => ({
   month: state.selectedPeriod[0], // TODO: Temporary, it works only for fullmonths
-  tooltip: state.tooltip
+  tooltipVisible: state.tooltip.visible
 })
 
 export default connect(mapStateToProps)(Table)
