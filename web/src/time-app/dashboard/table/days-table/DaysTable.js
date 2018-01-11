@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Some, None } from 'monet'
 import {
   eachDay, startOfMonth, endOfMonth,
-  format, isSameDay, isFuture, isWeekend,
+  format, isToday, isFuture, isWeekend,
 } from 'date-fns'
 
 import { sumWorklogListToHours } from 'time-lib/date-and-time'
@@ -43,7 +43,8 @@ const TableHead = ({ daysInMonth }) => (
 
 const TableBodyCell = ({ date, hours: maybeHours }) => {
   const suspiciousClassName = maybeHours
-    .filter(() => !isSameDay(date, new Date()))
+    .orElse(Some(0))
+    .filter(() => !isToday(date))
     .filter(() => !isFuture(date))
     .filter(hours => hours < 8)
     .map(() => ClassModifier.Suspicious)
