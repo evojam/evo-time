@@ -1,4 +1,4 @@
-import { filter, map, switchMap, catchError } from 'rxjs/operators'
+import { map, switchMap, catchError } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
 import { ofType, combineEpics } from 'redux-observable'
 import { format } from 'date-fns'
