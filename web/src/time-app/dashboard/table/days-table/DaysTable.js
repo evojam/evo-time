@@ -6,11 +6,9 @@ import {
   format, isWeekend,
 } from 'date-fns'
 
-import { sumWorklogListToHours } from 'time-lib/date-and-time'
+import { sumWorklogListToHours, isStartOfWeek, isSuspiciousWorklog } from 'time-lib/date-and-time'
 
 import './DaysTable.css'
-import { isStartOfWeek } from '../../../../time-lib/date-and-time'
-import { isSuspiciousWorklog } from '../../../../time-lib/date-and-time/working-hours'
 
 const DAY_OF_MONTH = 'DD'
 const DAY_NAME = 'dd'
