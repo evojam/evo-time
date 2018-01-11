@@ -8,6 +8,7 @@ import com.evojam.models.dto.WorklogDto
 import com.google.inject.Inject
 import play.api.cache.AsyncCacheApi
 import play.api.libs.ws.{WSAuthScheme, WSClient, WSResponse}
+import com.evojam.utils.StringNormalization.normalizer
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -54,7 +55,7 @@ class JiraServiceImpl @Inject()(
     val ids = worklogs.map(_.projectId).distinct
     Future.sequence(ids.map(getProjectById(creds, _))).map(_.flatten).map { projects =>
       worklogs.map(log => log.copy(project = projects.find(_.id == log.projectId)))
-        .groupBy(log => (log.username, log.displayName))
+        .groupBy(log => (log.username, log.displayName.normalize))
         .map {
           case ((username, displayName), logs) => Worklog(username, displayName, logs.map(_.toInfo))
         }.toSeq
