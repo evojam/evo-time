@@ -3,6 +3,7 @@ package com.evojam.controllers
 import java.time.LocalDate
 import javax.inject._
 
+import com.evojam.configuration.credentials.Credentials
 import com.evojam.servises.jira.JiraService
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -23,7 +24,22 @@ final class JiraController @Inject()(
     }
   }
 
-  def helthcheck() = Action.async { request =>
+  def setJiraCreds() = Action.async(parse.json[Credentials]) { request =>
+    jira.setJiraCreds(request.body).map(_ => NoContent)
+  }
+
+  def getJiraCreds() = Action.async { request =>
+    jira.getJiraCreds().map {
+      case Nil => NoContent
+      case urls => Ok(Json.toJson(urls))
+    }
+  }
+
+  def removeJiraCreds(url: String) = Action.async { _ =>
+    jira.removeJiraCreds(url).map(_ => NoContent)
+  }
+
+  def healthcheck() = Action.async { request =>
 //    jira.getWorklogs(LocalDate.of(2017, 12, 1), LocalDate.of(2018, 1, 1)).map {
 //      case s if s.isEmpty => NoContent
 //      case worklogs => Ok(Json.toJson(worklogs))
