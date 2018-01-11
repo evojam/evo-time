@@ -7,9 +7,9 @@ import {
 } from 'date-fns'
 
 import { sumWorklogListToHours, isStartOfWeek, isSuspiciousWorklog } from 'time-lib/date-and-time'
+import { openTooltip } from 'time-lib/worklogs'
 
 import './DaysTable.css'
-import { openTooltip } from 'time-lib/worklog'
 
 const DAY_OF_MONTH = 'DD'
 const DAY_NAME = 'dd'
@@ -82,44 +82,44 @@ const mapDispatchToProps = dispatch => ({
 
 const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)
 
-const TableBodyRow = ({ daysInMonth, worklog, username }) => (
+const TableBodyRow = ({ daysInMonth, worklogs, username }) => (
   <tr>
     {daysInMonth.map(date =>
       <TableBodyCellContainer
         key={date}
         date={date}
-        hours={worklog.has(date) ? Some(sumWorklogListToHours(worklog.get(date))) : None()}
+        hours={worklogs.has(date) ? Some(sumWorklogListToHours(worklogs.get(date))) : None()}
         username={username}
       />)}
   </tr>
 )
 
-const TableBody = ({ daysInMonth, worklog }) => (
+const TableBody = ({ daysInMonth, worklogs }) => (
   <tbody>
-    {worklog
+    {worklogs
       .map((entry, key) =>
         <TableBodyRow
           key={key}
           daysInMonth={daysInMonth}
           username={entry.username}
-          worklog={entry.worklog} />)
+          worklogs={entry.worklogs} />)
       .toList()}
   </tbody>
 )
 
-export const DaysTable = ({ month, worklog }) => {
+export const DaysTable = ({ month, worklogs }) => {
   const daysInMonth = eachDay(startOfMonth(month), endOfMonth(month))
 
   return (
     <table className="aui days-table">
       <TableHead daysInMonth={daysInMonth} />
-      <TableBody daysInMonth={daysInMonth} worklog={worklog} />
+      <TableBody daysInMonth={daysInMonth} worklogs={worklogs} />
     </table>
   )
 }
 
 const mapStateToProps = state => ({
-  worklog: state.worklog,
+  worklogs: state.worklogs,
 })
 
 export default  connect(mapStateToProps)(DaysTable)

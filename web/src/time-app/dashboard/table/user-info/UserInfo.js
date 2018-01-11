@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { closeTooltip } from 'time-lib/worklog'
+import { closeTooltip } from 'time-lib/worklogs'
 
 import './UserInfo.css'
 
@@ -17,12 +17,12 @@ const TableHead = () => (
 )
 
 const UserInfo = ({ tooltip, closeTooltip }) => (
-   <div className="user-info">
-     <table className="aui user-info___table">
-       <TableHead />
-     </table>
-     <button className="aui-button user-info__btn" onClick={closeTooltip}>close</button>
-   </div>
+  <div className="user-info">
+    <table className="aui user-info___table">
+      <TableHead />
+    </table>
+    <button className="aui-button user-info__btn" onClick={closeTooltip}>close</button>
+  </div>
 )
 
 const mapStateToProps = state => ({

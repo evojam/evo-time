@@ -4,7 +4,7 @@ import { ConnectedRouter } from 'react-router-redux'
 
 import { history } from 'time-lib/store'
 
-import { Dashboard } from './dashboard'
+import Dashboard from './dashboard/Dashboard'
 
 export const MainComponent = () => (
   <ConnectedRouter history={history}>
