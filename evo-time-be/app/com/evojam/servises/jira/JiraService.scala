@@ -13,7 +13,9 @@ trait JiraService {
 
   def getJiraCreds(): Future[Seq[String]]
 
-  def getProjectById(id: Int): Future[Option[Project]]
+  def removeJiraCreds(url: String): Future[Unit]
+
+  protected def getProjectById(creds: Credentials, id: Int): Future[Option[Project]]
 
   def getWorklogs(from: LocalDate, to: LocalDate): Future[Map[String, Worklog]]
 }

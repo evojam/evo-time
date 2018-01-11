@@ -35,6 +35,10 @@ final class JiraController @Inject()(
     }
   }
 
+  def removeJiraCreds(url: String) = Action.async { _ =>
+    jira.removeJiraCreds(url).map(_ => NoContent)
+  }
+
   def healthcheck() = Action.async { request =>
 //    jira.getWorklogs(LocalDate.of(2017, 12, 1), LocalDate.of(2018, 1, 1)).map {
 //      case s if s.isEmpty => NoContent
