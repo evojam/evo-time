@@ -5,6 +5,7 @@ import { ArrowButton } from './ArrowButton'
 import { connect } from 'react-redux'
 import { format, isSameMonth } from 'date-fns'
 import { previousPeriod, nextPeriod } from 'time-lib/worklogs'
+import { NyanLoader } from '../loader'
 
 const mapDispatchToProps = dispatch => ({
   onLeftArrowClick: () => dispatch(previousPeriod()),
@@ -31,7 +32,8 @@ export const Navigation = ({ className, onLeftArrowClick, onRightArrowClick, sel
     <form className="aui navigation__form">
       <input className="text" type="text" readOnly={true} value={formatPeriod(selectedPeriod)}/>
     </form>
-    {isLoading && <span className="aui-icon aui-icon-wait navigation__spinner">Wait</span>}
+    {/*{SpinnerLoader className="navigation__spinner}*/}
+    {isLoading && <NyanLoader className="navigation__spinner"/>}
   </nav>
 )
 
