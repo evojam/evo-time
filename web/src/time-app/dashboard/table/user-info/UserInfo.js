@@ -5,6 +5,8 @@ import { closeTooltip } from 'time-lib/worklogs'
 
 import './UserInfo.css'
 
+const ENTER_KEYCODE = 27
+
 const TableHead = () => (
   <thead>
     <tr>
@@ -29,7 +31,7 @@ class UserInfo extends React.Component {
   onKeyDown = (event) => {
     const { closeTooltip } = this.props
 
-    if (event.keyCode === 27) {
+    if (event.keyCode === ENTER_KEYCODE) {
       closeTooltip()
     }
     return
