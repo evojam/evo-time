@@ -3,6 +3,7 @@ $table-border-color: #ddd
 $suspicious-background-color: #ea9999
 $holiday-background-color: #f4f5f5
 $holiday-text-color: #999
+$start-of-week-border: 2px solid #999
 
 .days-table
   border: 1px solid $table-border-color
@@ -25,12 +26,17 @@ $holiday-text-color: #999
     &--holiday
       color: $holiday-text-color
 
+    &--start-of-week
+      border-left: $start-of-week-border
+
   td
     border: 1px solid $table-border-color
     text-align: center !important
 
-  .body__cell,
+  .body__cell
     &--suspicious
       background-color: $suspicious-background-color
     &--holiday
       background-color: $holiday-background-color
+    &--start-of-week
+      border-left: $start-of-week-border

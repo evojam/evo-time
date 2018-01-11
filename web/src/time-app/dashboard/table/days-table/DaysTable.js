@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 import { Some, None } from 'monet'
 import {
   eachDay, startOfMonth, endOfMonth,
-  format, isSameDay, isFuture, isWeekend,
+  format, isWeekend,
 } from 'date-fns'
 
 import { sumWorklogListToHours } from 'time-lib/date-and-time'
 
 import './DaysTable.css'
+import { isStartOfWeek } from '../../../../time-lib/date-and-time'
+import { isSuspiciousWorklog } from '../../../../time-lib/date-and-time/working-hours'
 
 const DAY_OF_MONTH = 'DD'
 const DAY_NAME = 'dd'
@@ -16,17 +18,35 @@ const DAY_NAME = 'dd'
 const ClassModifier = {
   Holiday: 'holiday',
   Suspicious: 'suspicious',
+  StartOfWeek: 'start-of-week',
 }
 
+const shouldApplyModifier = (modifier, date, hours) => {
+  switch (modifier) {
+    case ClassModifier.Holiday:
+      return isWeekend(date)
+    case ClassModifier.StartOfWeek:
+      return isStartOfWeek(date)
+    case ClassModifier.Suspicious:
+      return isSuspiciousWorklog(date, hours)
+    default:
+      return false
+  }
+}
+
+const classNameWithModifiers = (...modifiers) => (baseClass, date, hours = null) => modifiers
+  .reduce((className, modifier) => {
+    return shouldApplyModifier(modifier, date, hours) ? `${className} ${baseClass}--${modifier}` : className
+  }, baseClass)
+
 const TableHeadCell = ({ day }) => {
-  const holidayClassName = isWeekend(day) ? ClassModifier.Holiday : ''
-  const classNames = [holidayClassName]
-    .filter(modifier => modifier !== '')
-    .map(modifier => `header__cell--${modifier}`)
-    .join(' ')
+  const className = classNameWithModifiers(
+    ClassModifier.Holiday,
+    ClassModifier.StartOfWeek
+  )('header__cell', day)
 
   return (
-    <th key={day} className={`header__cell ${classNames}`}>
+    <th key={day} className={className}>
       <span className="bold">{format(day, DAY_OF_MONTH)}</span>
       <span>{format(day, DAY_NAME)}</span>
     </th>
@@ -42,20 +62,16 @@ const TableHead = ({ daysInMonth }) => (
 )
 
 const TableBodyCell = ({ date, hours: maybeHours }) => {
-  const suspiciousClassName = maybeHours
-    .filter(() => !isSameDay(date, new Date()))
-    .filter(() => !isFuture(date))
-    .filter(hours => hours < 8)
-    .map(() => ClassModifier.Suspicious)
-    .orJust('')
-  const holidayClassName = isWeekend(date) ? ClassModifier.Holiday : ''
-  const classNames = [suspiciousClassName, holidayClassName]
-    .filter(modifier => modifier !== '')
-    .map(modifier => `body__cell--${modifier}`)
-    .join(' ')
+  const hours = maybeHours.orJust(0)
+
+  const className = classNameWithModifiers(
+    ClassModifier.Holiday,
+    ClassModifier.StartOfWeek,
+    ClassModifier.Suspicious
+  )('body__cell', date, hours)
 
   return (
-    <td className={classNames}>
+    <td className={className}>
       {maybeHours.orJust('')}
     </td>
   )
