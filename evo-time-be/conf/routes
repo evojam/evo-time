@@ -13,4 +13,4 @@ GET           /api/jira            com.evojam.controllers.JiraController.getJira
 
 DELETE        /api/jira            com.evojam.controllers.JiraController.removeJiraCreds(url: String)
 
-GET           /api/holidays        com.evojam.controllers.CalendarController.getHolidays()
+GET           /api/holidays        com.evojam.controllers.CalendarController.getHolidays(year: Int)

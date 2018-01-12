@@ -8,12 +8,12 @@ import play.api.mvc.{AbstractController, ControllerComponents}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-final class CalendarController @Inject() (
+final class CalendarController @Inject()(
   cc: ControllerComponents,
   calendar: CalendarService
 ) extends AbstractController(cc) {
-  def getHolidays() = Action.async { _ =>
-    calendar.getHolidays().map {
+  def getHolidays(year: Int) = Action.async { _ =>
+    calendar.getHolidays(year).map {
       case xs if xs.isEmpty => NoContent
       case holidays => Ok(Json.toJson(holidays))
     }
