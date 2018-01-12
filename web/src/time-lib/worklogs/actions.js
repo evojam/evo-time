@@ -39,9 +39,10 @@ export function getWorklogFailure() {
   }
 }
 
-export function openTooltip(username) {
+export function openTooltip({ date, username }) {
   return {
     type: WorklogActionType.OpenTooltip,
+    date,
     username,
   }
 }

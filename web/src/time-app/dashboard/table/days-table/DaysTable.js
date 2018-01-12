@@ -70,14 +70,14 @@ const TableBodyCell = ({ date, hours: maybeHours, username, openTooltip }) => {
   )('body__cell', date, hours)
 
   return (
-    <td className={className} onClick={openTooltip(username)}>
+    <td className={className} onClick={openTooltip({ date, username })}>
       {maybeHours.orJust('')}
     </td>
   )
 }
 
 const mapDispatchToProps = dispatch => ({
-  openTooltip: username => () => dispatch(openTooltip(username)),
+  openTooltip: payload => () => dispatch(openTooltip(payload)),
 })
 
 const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)

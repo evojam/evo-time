@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { closeTooltip } from 'time-lib/worklogs'
+import { closeTooltip, getSummaryForEachProject } from 'time-lib/worklogs'
 
 import './UserInfo.css'
 
@@ -68,7 +68,8 @@ class UserInfo extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tooltip: state.tooltip
+  tooltip: state.tooltip,
+  worklogs: getSummaryForEachProject(state.worklogs, state.tooltip.username, state.tooltip.date)
 })
 
 const mapDispatchToProps = dispatch => ({
