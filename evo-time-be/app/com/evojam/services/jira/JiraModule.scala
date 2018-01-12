@@ -1,4 +1,4 @@
-package com.evojam.servises.jira
+package com.evojam.services.jira
 
 import play.api.{Configuration, Environment}
 import play.api.inject.{Binding, Module}

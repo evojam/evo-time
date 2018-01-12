@@ -4,7 +4,7 @@ import java.time.LocalDate
 import javax.inject._
 
 import com.evojam.configuration.credentials.Credentials
-import com.evojam.servises.jira.JiraService
+import com.evojam.services.jira.JiraService
 import play.api.libs.json.Json
 import play.api.mvc._
 
