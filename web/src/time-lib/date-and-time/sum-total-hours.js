@@ -10,5 +10,8 @@ export const sumTotalHours = entry => {
   const hours = Math.floor(seconds / 60 / 60)
   const minutes = Math.floor(remainingMinutesInSeconds(seconds) / 60)
 
-  return `${hours}h ${minutes}min`
+  return [[hours, 'h'], [minutes, 'min']]
+    .filter(([amount]) => amount > 0)
+    .map(([amount, suffix]) => `${amount}${suffix}`)
+    .join(' ')
 }
