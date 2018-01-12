@@ -1,12 +1,12 @@
 import { Maybe } from 'monet'
 import { OrderedMap } from 'immutable'
 
-export const groupByIssue = worklog => worklog.project.id
+export const getProjectId = worklog => worklog.project.id
 
 const toUserWorklogByDate = date => user => Maybe.fromNull(user.worklogs.get(date))
 
 const toWorklogsPerProject = worklog => worklog
-  .groupBy(groupByIssue)
+  .groupBy(getProjectId)
   .map(worklogs => worklogs
     .reduce(({ projectName, totalSeconds }, worklog) => {
       return {
