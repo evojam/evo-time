@@ -6,6 +6,9 @@ export const WorklogActionType = {
   GetWorklogFailure: 'GET_WORKLOG_FAILURE',
   OpenTooltip: 'OPEN_TOOLTIP',
   CloseTooltip: 'CLOSE_TOOLTIP',
+  GetHolidays: 'GET_HOLIDAYS',
+  GetHolidaysSuccess: 'GET_HOLIDAYS_SUCCESS',
+  GetHolidaysFailure: 'GET_HOLIDAYS_FAILURE',
 }
 
 export function nextPeriod() {
@@ -51,5 +54,26 @@ export function openTooltip({ date, username, displayName }) {
 export function closeTooltip() {
   return {
     type: WorklogActionType.CloseTooltip,
+  }
+}
+
+export function getHolidays() {
+  return {
+    type: WorklogActionType.GetHolidays,
+  }
+}
+
+export function getHolidaysSuccess(year) {
+  return function (holidays) {
+    return {
+      type: WorklogActionType.GetHolidaysSuccess,
+      payload: { year, holidays },
+    }
+  }
+}
+
+export function getHolidaysFailure() {
+  return {
+    type: WorklogActionType.GetHolidaysFailure,
   }
 }

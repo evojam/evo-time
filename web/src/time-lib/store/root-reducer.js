@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux'
 
 import { routerReducer } from '../router'
-import { loadingReducer, selectedPeriodReducer, tooltipReducer, worklogReducer } from '../worklogs/reducers'
+import {
+  loadingReducer, selectedPeriodReducer, tooltipReducer,
+  worklogReducer, holidaysReducer,
+} from '../worklogs/reducers'
 
 export const rootReducer = combineReducers({
   router: routerReducer,
@@ -9,4 +12,5 @@ export const rootReducer = combineReducers({
   worklogs: worklogReducer,
   isLoading: loadingReducer,
   tooltip: tooltipReducer,
+  holidays: holidaysReducer,
 })

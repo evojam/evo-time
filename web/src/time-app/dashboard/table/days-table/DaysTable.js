@@ -6,7 +6,7 @@ import {
   format, isWeekend,
 } from 'date-fns'
 
-import { sumWorklogListToHours, isStartOfWeek, isSuspiciousWorklog } from 'time-lib/date-and-time'
+import { sumWorklogListToHours, isStartOfWeek, isSuspiciousWorklog, isHoliday } from 'time-lib/date-and-time'
 import { openTooltip, closeTooltip } from 'time-lib/worklogs'
 
 import './DaysTable.css'
@@ -20,26 +20,26 @@ const ClassModifier = {
   StartOfWeek: 'start-of-week',
 }
 
-const shouldApplyModifier = (modifier, date, hours) => {
+const shouldApplyModifier = (modifier, date, hours, holidays) => {
   switch (modifier) {
     case ClassModifier.Holiday:
-      return isWeekend(date)
+      return isWeekend(date) || isHoliday(holidays, date)
     case ClassModifier.StartOfWeek:
       return isStartOfWeek(date)
     case ClassModifier.Suspicious:
-      return isSuspiciousWorklog(date, hours)
+      return isSuspiciousWorklog(holidays, date, hours)
     default:
       return false
   }
 }
 
-const classNameWithModifiers = (...modifiers) => (baseClass, date, hours = null) => modifiers
+const classNameWithModifiers = holidays => (...modifiers) => (baseClass, date, hours = null) => modifiers
   .reduce((className, modifier) => {
-    return shouldApplyModifier(modifier, date, hours) ? `${className} ${baseClass}--${modifier}` : className
+    return shouldApplyModifier(modifier, date, hours, holidays) ? `${className} ${baseClass}--${modifier}` : className
   }, baseClass)
 
-const TableHeadCell = ({ day }) => {
-  const className = classNameWithModifiers(
+const TableHeadCellComponent = ({ day, holidays }) => {
+  const className = classNameWithModifiers(holidays)(
     ClassModifier.Holiday,
     ClassModifier.StartOfWeek
   )('header__cell', day)
@@ -52,6 +52,8 @@ const TableHeadCell = ({ day }) => {
   )
 }
 
+const TableHeadCell = connect((state => ({ holidays: state.holidays })))(TableHeadCellComponent)
+
 const TableHead = ({ daysInMonth }) => (
   <thead>
     <tr>
@@ -60,10 +62,10 @@ const TableHead = ({ daysInMonth }) => (
   </thead>
 )
 
-const TableBodyCell = ({ date, hours: maybeHours, username, displayName, openTooltip, closeTooltip }) => {
+const TableBodyCellComponent = ({ date, hours: maybeHours, username, displayName, openTooltip, closeTooltip, holidays }) => {
   const hours = maybeHours.orJust(0)
 
-  const className = classNameWithModifiers(
+  const className = classNameWithModifiers(holidays)(
     ClassModifier.Holiday,
     ClassModifier.StartOfWeek,
     ClassModifier.Suspicious
@@ -84,13 +86,13 @@ const mapDispatchToProps = dispatch => ({
   openTooltip: payload => () => dispatch(openTooltip(payload)),
   closeTooltip: () => () => dispatch(closeTooltip())
 })
+const TableBodyCell = connect(state => ({ holidays: state.holidays }), mapDispatchToProps)(TableBodyCellComponent)
 
-const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)
 
 const TableBodyRow = ({ daysInMonth, worklogs, username, displayName }) => (
   <tr>
     {daysInMonth.map(date =>
-      <TableBodyCellContainer
+      <TableBodyCell
         key={date}
         date={date}
         hours={worklogs.has(date) ? Some(sumWorklogListToHours(worklogs.get(date))) : None()}
