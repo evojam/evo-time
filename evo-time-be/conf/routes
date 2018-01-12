@@ -1,0 +1,16 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+GET           /healthcheck         com.evojam.controllers.JiraController.healthcheck()
+
+GET           /api/worklogs        com.evojam.controllers.JiraController.getWorklogs(from: LocalDate, to: Option[LocalDate])
+
+POST          /api/jira            com.evojam.controllers.JiraController.setJiraCreds()
+
+GET           /api/jira            com.evojam.controllers.JiraController.getJiraCreds()
+
+DELETE        /api/jira            com.evojam.controllers.JiraController.removeJiraCreds(url: String)
+
+GET           /api/holidays        com.evojam.controllers.CalendarController.getHolidays(year: Int)

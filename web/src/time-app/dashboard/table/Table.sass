@@ -1,0 +1,26 @@
+$summary-width: 350px
+$dashboard-table-height: 80%
+
+.dashboard-table
+  position: relative
+  overflow: hidden
+  height: 100%
+
+  .summary-table-container
+    background: #fff
+    width: $summary-width
+    height: calc(#{$dashboard-table-height} - 20px)
+
+    position: absolute
+    left: 0
+    top: 0
+
+  .days-table-container
+    background: #fff
+    width: 100%
+    height: $dashboard-table-height
+
+    overflow-x: scroll
+
+    table
+      margin-left: calc(#{$summary-width} - 1px) // -1px for hidding left border

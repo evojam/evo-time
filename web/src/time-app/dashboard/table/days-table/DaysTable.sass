@@ -1,0 +1,51 @@
+$table-border-color: #ddd
+
+$normal-hover-background-color: rgba(33, 33, 33, 0.2)
+$suspicious-hover-background-color: rgba(200, 33, 33, 0.6)
+
+$suspicious-background-color: #ea9999
+$holiday-background-color: #f4f5f5
+$holiday-text-color: #999
+$start-of-week-border: 2px solid #999
+
+.days-table
+  border: 1px solid $table-border-color
+  border-collapse: collapse
+
+  .header__cell
+    text-align: center
+    border: 1px solid $table-border-color
+    padding: 2px 2px
+
+    span
+      width: 50px
+      display: block
+      text-transform: uppercase
+      font-weight: normal
+
+      &.bold
+        font-weight: bold
+
+    &--holiday
+      color: $holiday-text-color
+
+    &--start-of-week
+      border-left: $start-of-week-border
+
+  td
+    border: 1px solid $table-border-color
+    text-align: center !important
+
+  .body__cell
+    &:hover
+      cursor: pointer
+      background: $normal-hover-background-color
+
+    &--suspicious
+      background-color: $suspicious-background-color
+      &:hover
+        background: $suspicious-hover-background-color
+    &--holiday
+      background-color: $holiday-background-color
+    &--start-of-week
+      border-left: $start-of-week-border
