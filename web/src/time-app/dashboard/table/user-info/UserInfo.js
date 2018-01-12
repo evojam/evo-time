@@ -1,11 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { format } from 'date-fns'
 
 import { closeTooltip, getSummaryForEachProject } from 'time-lib/worklogs'
 
 import './UserInfo.css'
+import { secondsToHoursString } from '../../../../time-lib/date-and-time'
 
 const ENTER_KEYCODE = 27
+
+const formatDate = date => format(date, 'DD/MMM/YYYY')
 
 const TableHead = () => (
   <thead>
@@ -18,20 +22,21 @@ const TableHead = () => (
   </thead>
 )
 
-const TableBody = () => (
+const TableBody = ({ date, displayName, worklogs }) => (
   <tbody>
-    <tr>
-      <td>11/Jan/2018</td>
-      <td>Justyna Bielecka</td>
-      <td>Valhalla</td>
-      <td className='user-info__hours'>8h</td>
-    </tr>
-    <tr>
-      <td>10/Jan/2018</td>
-      <td>Justyna Bielecka</td>
-      <td>Valhalla</td>
-      <td className='user-info__hours'>6h</td>
-    </tr>
+  {
+    worklogs && worklogs
+      .map(({ projectName, totalSeconds }, projectId) => (
+        <tr key={projectId}>
+          <td>{formatDate(date)}</td>
+          <td>{displayName}</td>
+          <td>{projectName}</td>
+          <td>{secondsToHoursString(totalSeconds)}</td>
+        </tr>
+      ))
+      .toList()
+
+  }
   </tbody>
 )
 
@@ -54,12 +59,13 @@ class UserInfo extends React.Component {
   }
 
   render() {
-    const { closeTooltip } = this.props
+    const { closeTooltip, tooltip, worklogs } = this.props
+
     return (
       <div className="user-info">
         <table className="aui user-info___table">
           <TableHead />
-          <TableBody />
+          <TableBody date={tooltip.date} displayName={tooltip.displayName} worklogs={worklogs}/>
         </table>
         <button className="aui-button user-info__btn" onClick={closeTooltip}>close</button>
       </div>

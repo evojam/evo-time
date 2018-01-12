@@ -7,7 +7,7 @@ import {
 } from 'date-fns'
 
 import { sumWorklogListToHours, isStartOfWeek, isSuspiciousWorklog } from 'time-lib/date-and-time'
-import { openTooltip } from 'time-lib/worklogs'
+import { openTooltip, closeTooltip } from 'time-lib/worklogs'
 
 import './DaysTable.css'
 
@@ -60,7 +60,7 @@ const TableHead = ({ daysInMonth }) => (
   </thead>
 )
 
-const TableBodyCell = ({ date, hours: maybeHours, username, openTooltip }) => {
+const TableBodyCell = ({ date, hours: maybeHours, username, displayName, openTooltip, closeTooltip }) => {
   const hours = maybeHours.orJust(0)
 
   const className = classNameWithModifiers(
@@ -70,19 +70,25 @@ const TableBodyCell = ({ date, hours: maybeHours, username, openTooltip }) => {
   )('body__cell', date, hours)
 
   return (
-    <td className={className} onClick={openTooltip({ date, username })}>
-      {maybeHours.orJust('')}
-    </td>
+    maybeHours.isSome() ?
+      <td className={className} onClick={openTooltip({ date, username, displayName })}>
+        {maybeHours.orJust('')}
+      </td>
+        :
+      <td className={className} onClick={closeTooltip()}>
+        {maybeHours.orJust('')}
+      </td>
   )
 }
 
 const mapDispatchToProps = dispatch => ({
   openTooltip: payload => () => dispatch(openTooltip(payload)),
+  closeTooltip: () => () => dispatch(closeTooltip())
 })
 
 const TableBodyCellContainer = connect(null, mapDispatchToProps)(TableBodyCell)
 
-const TableBodyRow = ({ daysInMonth, worklogs, username }) => (
+const TableBodyRow = ({ daysInMonth, worklogs, username, displayName }) => (
   <tr>
     {daysInMonth.map(date =>
       <TableBodyCellContainer
@@ -90,6 +96,7 @@ const TableBodyRow = ({ daysInMonth, worklogs, username }) => (
         date={date}
         hours={worklogs.has(date) ? Some(sumWorklogListToHours(worklogs.get(date))) : None()}
         username={username}
+        displayName={displayName}
       />)}
   </tr>
 )
@@ -102,6 +109,7 @@ const TableBody = ({ daysInMonth, worklogs }) => (
           key={key}
           daysInMonth={daysInMonth}
           username={entry.username}
+          displayName={entry.displayName}
           worklogs={entry.worklogs} />)
       .toList()}
   </tbody>

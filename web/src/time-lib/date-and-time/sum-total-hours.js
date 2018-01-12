@@ -7,6 +7,10 @@ const remainingMinutesInSeconds = seconds => {
 
 export const sumTotalHours = entry => {
   const seconds = entry.worklogs.reduce((acc, worklogList) => acc + sumWorklogInSeconds(worklogList), 0)
+  return secondsToHoursString(seconds)
+}
+
+export const secondsToHoursString = seconds => {
   const hours = Math.floor(seconds / 60 / 60)
   const minutes = Math.floor(remainingMinutesInSeconds(seconds) / 60)
 
