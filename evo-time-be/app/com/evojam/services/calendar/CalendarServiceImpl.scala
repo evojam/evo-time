@@ -15,9 +15,12 @@ final class CalendarServiceImpl @Inject() (
 
   private val fullUrl: String = url + "?key=" + config.get[String]("calendar.token")
 
-  override def getHolidays(): Future[Map[String, Seq[String]]] =
+  override def getHolidays(year: Int): Future[Map[String, Seq[String]]] =
     ws.url(fullUrl).get().map {
-      case res if res.status == 200 => res.json.as[Seq[Calendar]].groupBy(_.date.toString).mapValues(_.map(_.name))
+      case res if res.status == 200 =>
+        res.json.as[Seq[Calendar]]
+          .filter(_.date.getYear == year)
+          .groupBy(_.date.toString).mapValues(_.map(_.name))
       case _ => Map.empty[String, Seq[String]]
     }
 }
