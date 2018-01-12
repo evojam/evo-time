@@ -1,8 +1,10 @@
 $table-border-color: #ddd
+$table-background-color: #fff
 
 .summary-table
   border: 1px solid $table-border-color
   border-collapse: collapse
+  background: $table-background-color
 
   .header__cell
     border:
@@ -15,6 +17,20 @@ $table-border-color: #ddd
 
   .body__cell
     padding: 7px 10px
+    padding-left: 50px
+    position: relative
 
     &--right
       text-align: right
+
+  .body-cell
+    &__avatar
+      width: 24px
+      height: 24px
+      border: 1px solid #ddd
+      border-radius: 2px
+
+      position: absolute
+      left: 10px
+      top: 50%
+      transform: translateY(-50%)

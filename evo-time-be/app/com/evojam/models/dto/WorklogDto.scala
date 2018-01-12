@@ -9,6 +9,7 @@ import play.api.libs.json._
 case class WorklogDto(
   username: String,
   displayName: String,
+  avatar: Option[String],
   date: LocalDateTime,
   timeSpentInSeconds: Int,
   issue: Issue,
@@ -23,15 +24,17 @@ object WorklogDto {
   private def default(
     username: String,
     displayName: String,
+    avatar: Option[String],
     date: LocalDateTime,
     timeSpentInSeconds: Int,
     issue: Issue,
     projectId: Int
-  ) = WorklogDto(username, displayName, date, timeSpentInSeconds, issue, projectId, None)
+  ) = WorklogDto(username, displayName, avatar, date, timeSpentInSeconds, issue, projectId, None)
 
   implicit val reads = (
     (__ \ 'author \ 'name).read[String] ~
     (__ \ 'author \ 'displayName).read[String] ~
+    (__ \ 'author \ 'avatar).readNullable[String] ~
     (__ \ 'dateStarted).read[LocalDateTime] ~
     (__ \ 'timeSpentSeconds).read[Int] ~
     (__ \ 'issue).read[Issue] ~

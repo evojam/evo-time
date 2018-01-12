@@ -18,7 +18,10 @@ const TableBody = ({ worklogs }) => (
   <tbody>
     {worklogs.map((entry, key) =>
       <tr key={key}>
-        <td className="body__cell">{entry.displayName}</td>
+        <td className="body__cell">
+          {entry.avatar && <img src={entry.avatar} className="body-cell__avatar" />}
+          {entry.displayName}
+        </td>
         <td className="body__cell body__cell--right">{sumTotalHours(entry)}</td>
       </tr>
     ).toList()}
