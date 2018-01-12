@@ -57,7 +57,8 @@ class JiraServiceImpl @Inject()(
       worklogs.map(log => log.copy(project = projects.find(_.id == log.projectId)))
         .groupBy(log => (log.username, log.displayName.normalize))
         .map {
-          case ((username, displayName), logs) => Worklog(username, displayName, logs.map(_.toInfo))
+          case ((username, displayName), logs) =>
+            Worklog(username, displayName, logs.headOption.flatMap(_.avatar), logs.map(_.toInfo))
         }.toSeq
     }
   }
