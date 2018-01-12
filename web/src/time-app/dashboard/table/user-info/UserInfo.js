@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { closeTooltip } from 'time-lib/worklogs'
 
 import './UserInfo.css'
+import { getSummaryForEachProject } from '../../../../time-lib/worklogs/selectors'
 
 const ENTER_KEYCODE = 27
 
@@ -50,7 +51,8 @@ class UserInfo extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tooltip: state.tooltip
+  tooltip: state.tooltip,
+  worklogs: getSummaryForEachProject(state.worklogs, state.tooltip.username, state.tooltip.date)
 })
 
 const mapDispatchToProps = dispatch => ({
