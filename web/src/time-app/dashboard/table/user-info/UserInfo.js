@@ -1,10 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { closeTooltip } from 'time-lib/worklogs'
+import { closeTooltip, getSummaryForEachProject } from 'time-lib/worklogs'
 
 import './UserInfo.css'
-import { getSummaryForEachProject } from '../../../../time-lib/worklogs/selectors'
 
 const ENTER_KEYCODE = 27
 
