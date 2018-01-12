@@ -18,6 +18,23 @@ const TableHead = () => (
   </thead>
 )
 
+const TableBody = () => (
+  <tbody>
+    <tr>
+      <td>11/Jan/2018</td>
+      <td>Justyna Bielecka</td>
+      <td>Valhalla</td>
+      <td className='user-info__hours'>8h</td>
+    </tr>
+    <tr>
+      <td>10/Jan/2018</td>
+      <td>Justyna Bielecka</td>
+      <td>Valhalla</td>
+      <td className='user-info__hours'>6h</td>
+    </tr>
+  </tbody>
+)
+
 class UserInfo extends React.Component {
 
   componentDidMount() {
@@ -42,6 +59,7 @@ class UserInfo extends React.Component {
       <div className="user-info">
         <table className="aui user-info___table">
           <TableHead />
+          <TableBody />
         </table>
         <button className="aui-button user-info__btn" onClick={closeTooltip}>close</button>
       </div>
