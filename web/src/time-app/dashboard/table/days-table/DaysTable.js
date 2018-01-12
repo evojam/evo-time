@@ -69,16 +69,15 @@ const TableBodyCell = ({ date, hours: maybeHours, username, displayName, openToo
     ClassModifier.Suspicious
   )('body__cell', date, hours)
 
-  return (
-    maybeHours.isSome() ?
-      <td className={className} onClick={openTooltip({ date, username, displayName })}>
-        {maybeHours.orJust('')}
-      </td>
-        :
-      <td className={className} onClick={closeTooltip()}>
-        {maybeHours.orJust('')}
-      </td>
-  )
+  return maybeHours
+      .map(hours => (
+        <td className={className} onClick={openTooltip({ date, username, displayName })}>
+          { hours || '' }
+        </td>
+      ))
+      .orJust(
+        <td className={className} onClick={closeTooltip()}>{ hours || '' }</td>
+      )
 }
 
 const mapDispatchToProps = dispatch => ({
