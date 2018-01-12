@@ -86,6 +86,7 @@ Response:
   "jsnow": {
     "username": "jsnow",
     "displayName": "John Snow",
+    "avatar":"https://image.com",
     "worklogs": [
       {
           "date" : "2017-12-04T08:24:00",
